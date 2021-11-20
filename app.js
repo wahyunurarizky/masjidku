@@ -7,7 +7,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-// const compression = require('compression');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 
@@ -57,7 +57,7 @@ app.use(
 // serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use(compression());
+app.use(compression());
 
 // *************************ROUTES***************************
 
