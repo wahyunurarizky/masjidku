@@ -129,7 +129,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   // jika tidak ada token pada authorization header
   if (!token) {
     return next(
-      new AppError('you are not logged in, please logini to get access', 401)
+      new AppError('you are not logged in, please login to get access', 401)
     );
   }
 
@@ -258,5 +258,31 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 4) log in with new password, send jwt
+  createSendToken(user, 200, res);
+});
+
+exports.loginOnlyByName = catchAsync(async (req, res, next) => {
+  console.log('wkwk');
+
+  const { name } = req.body;
+
+  if (!name) {
+    return next(new AppError('please provide name', 400));
+  }
+
+  const user = await User.findOne({ name }).select('+password');
+
+  if (!user) {
+    const newUser = await User.create({
+      name: req.body.name,
+      password: '12345678',
+      passwordConfirm: '12345678',
+      role: 'user',
+    });
+
+    // sign(payload,secret,option) membuat token
+    return createSendToken(newUser, 201, res);
+  }
+  // send token to the client
   createSendToken(user, 200, res);
 });

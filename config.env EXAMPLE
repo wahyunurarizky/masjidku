@@ -1,9 +1,0 @@
-NODE_ENV=development
-PORT=3000
-DATABASE=mongodb+srv://xxxx:<PASSWORD>@clusterx.xxxx.mongodb.net/test?retryWrites=true&w=majority
-# DATABASE_LOCAL=mongodb://localhost:27017/db_name
-DATABASE_PASSWORD=db_password
-
-JWT_SECRET=my-ultra-secure-secret
-JWT_EXPIRES_IN=30d
-JWT_COOKIE_EXPIRES_IN=15

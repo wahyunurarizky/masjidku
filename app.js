@@ -6,11 +6,13 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 // const compression = require('compression');
 
 const AppError = require('./utils/appError');
 
 const userRouter = require('./routes/userRoutes');
+const masjidRouter = require('./routes/masjidRoutes');
 
 // *****************************declare app**************************
 const app = express();
@@ -34,6 +36,7 @@ app.use('/api', limiter);
 // body parser
 app.use(express.json({ limit: '15kb' }));
 app.use(express.urlencoded({ extended: true, limit: '15kb' }));
+app.use(cookieParser());
 
 // data sanitization after body parser is perfect place
 // 1) data sanitization against nosql query injection
@@ -59,6 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // *************************ROUTES***************************
 
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/masjid', masjidRouter);
 
 // handling un handled routes
 // all means get,post and etc
