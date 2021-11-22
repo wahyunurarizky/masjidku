@@ -9,7 +9,14 @@ class APIFeatures {
     // console.log(req.query);
     // {a: 5, b: 4}
     const queryObj = { ...this.queryString };
-    const excludedFields = ['page', 'sort', 'limit', 'fields', 'search'];
+    const excludedFields = [
+      'page',
+      'sort',
+      'limit',
+      'fields',
+      'search',
+      'near',
+    ];
 
     excludedFields.forEach((el) => delete queryObj[el]);
 
@@ -20,7 +27,9 @@ class APIFeatures {
     // \b\b artinya specific untuk misal kata 'gte' tidak akan berubah jika 'agtek'
     // /g artinya global. akan merubah semua kata bukan hanya kata pertama yang ditemukan
 
-    this.query = this.query.find(JSON.parse(queryStr));
+    const jsonQStr = JSON.parse(queryStr);
+
+    this.query = this.query.find(jsonQStr);
     return this;
   }
 
@@ -33,6 +42,19 @@ class APIFeatures {
       // console.log(sortBy);
 
       // sort('price ratingsAverage')
+    } else if (this.queryString.near) {
+      const [lat, lng, distance] = this.queryString.near.split(',');
+      this.query = this.query.find({
+        location: {
+          $near: {
+            $geometry: {
+              type: 'Point',
+              coordinates: [lng, lat],
+            },
+            $maxDistance: distance,
+          },
+        },
+      });
     } else {
       this.query = this.query.sort(sort);
     }

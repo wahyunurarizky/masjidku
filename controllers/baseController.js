@@ -1,6 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
+const calculateDistance = require('../utils/calculateDistance');
 
 const filterObj = (obj, allowedFields) => {
   const newObj = {};
@@ -81,15 +82,27 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model, popOptions, search, sort) =>
   catchAsync(async (req, res, next) => {
-    console.log('asdasd');
     const features = new APIFeatures(Model.find(req.filter), req.query)
       .filter()
       .sort(sort)
       .limit()
       .paginate()
       .search(search);
-    const docs = await features.query.populate(popOptions);
-    // const docs = await features.query.explain();
+    let docs = await features.query.populate(popOptions);
+
+    if (req.query.near) {
+      const [lat, lng] = req.query.near.split(',');
+      console.log(lat, lng);
+      docs = JSON.parse(JSON.stringify(docs)).map((d) => ({
+        ...d,
+        distance: calculateDistance(
+          d.location.coordinates[1],
+          d.location.coordinates[0],
+          lat,
+          lng
+        ),
+      }));
+    }
 
     res.status(200).json({
       status: 'succcess',

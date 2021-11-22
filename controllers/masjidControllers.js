@@ -9,7 +9,7 @@ const catchAsync = require('../utils/catchAsync');
 const cloudinary = require('../utils/cloudinary');
 const base = require('./baseController');
 
-exports.getAllMasjid = base.getAll(Masjid, [], ['name']);
+exports.getAllMasjid = base.getAll(Masjid, [], ['name'], 'createdAt');
 exports.getOneMasjid = base.getOne(Masjid);
 exports.createMasjid = base.createOne(
   Masjid,
