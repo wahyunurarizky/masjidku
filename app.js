@@ -13,14 +13,15 @@ const AppError = require('./utils/appError');
 
 const userRouter = require('./routes/userRoutes');
 const masjidRouter = require('./routes/masjidRoutes');
+const mainViewRouter = require('./routes/mainViewRoutes');
 
 // *****************************declare app**************************
 const app = express();
 
 app.use(cors());
 
-// app.set('view engine', 'pug');
-// app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
 // set security http headers
 app.use(helmet());
@@ -54,12 +55,13 @@ app.use(
   })
 );
 
-// serving static files
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(compression());
 
 // *************************ROUTES***************************
+// serving static files
+app.use(express.static(`${__dirname}/public`));
+
+app.use('/', mainViewRouter);
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/masjid', masjidRouter);

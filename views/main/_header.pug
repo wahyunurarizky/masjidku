@@ -1,0 +1,29 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.sticky-top.navbar--top
+  .container
+    a.navbar-brand(href='/') MGPL S3 - div 1
+    button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarNav.collapse.navbar-collapse
+      ul.navbar-nav.ms-auto
+        li.nav-item.me-4
+          a.nav-link(aria-current='page' href='/schedule') Schedule & Results
+        li.nav-item.me-4
+          a.nav-link(href='/standings') Standings
+        li.nav-item.me-4
+          a.nav-link(href='/teams') Teams & players
+        li.nav-item.me-4
+          a.nav-link(href='/top-mvp') Top Mvp
+        li.nav-item.me-4
+          a.nav-link(href='/about') About MGPL
+        li.nav-item.me-4
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown Divisi 1
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+              <li><a class="dropdown-item active" href="https://mgpl.herokuapp.com">Divisi 1</a></li>
+              <li><a class="dropdown-item" href="https://d2-mgpl.herokuapp.com">Divisi 2</a></li>
+              <li><a class="dropdown-item" href="https://d3-mgpl.herokuapp.com">Divisi 3</a></li>
+            </ul>
+          </div>
+        
