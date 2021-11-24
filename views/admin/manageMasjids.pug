@@ -1,0 +1,124 @@
+extends base
+
+block content
+  main.col-md-9.ms-sm-auto.col-lg-10.px-md-4
+    .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center.pt-3.pb-2.mb-3.border-bottom
+      h1.h2 Kelola Masjid
+    // Button trigger modal
+    button.mb-3.btn.btn-success(type='button' data-bs-toggle='modal' data-bs-target='#modalCreateMasjid')
+      | Tambahkan Masjid
+    .row
+      .col.text-center
+        table.table.table-striped.align-middle
+          thead
+            tr
+              th(scope='col') #
+              th(scope='col') Photo
+              th(scope='col') Nama
+              th(scope='col') Lokasi
+              th(scope='col') action
+          tbody
+            each masjid,i in masjids
+              tr
+                th(scope='row')= `${i+1}`
+                td 
+                  img(src=`${masjid.imageCoverUrl}` width='50')
+                td=masjid.name
+                td=masjid.location.address
+                td
+                  a(href=`/admin/manage-masjid/${masjid.id}`)
+                    span.badge.bg-primary.fw-lighter.me-2 detail
+                  a.edit-masjid(href='#' data-bs-toggle="modal" data-bs-target="#modalUpdate" data-id=`${masjid.id}`)
+                    span.badge.bg-warning.fw-lighter.text-dark.me-2 edit masjid
+                  a.delete-masjid(href='#' data-id=`${masjid.id}`)
+                    span.badge.bg-danger.fw-lighter delete
+    
+    // Modal
+    #modalCreateMasjid.modal.fade(tabindex='-1' aria-labelledby='modalCreateMasjidLabel' aria-hidden='true')
+      .modal-dialog.modal-dialog-scrollable
+        .modal-content
+          .modal-header
+            h5#modalCreateMasjidLabel.modal-title Tambah Masjid
+            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+          .modal-body
+            form.form--addMasjid#formmasjid
+              .mb-3
+                label.form-label(for='name') Nama
+                input#name.form-control(type='text' autocomplete="off" required)
+              .mb-3
+                label.form-label(for='address') Alamat
+                input#address.form-control(type='text' autocomplete="off" required)
+              .row 
+                .col-6
+                  .mb-3
+                    label.form-label(for='lat') Latitude
+                    input#lat.form-control(type='number' required step="0.00000001" min="-90" max="90" autocomplete="off")
+                    small#emailHelp.form-text.text-muted cth: -6,0123
+                .col-6
+                  .mb-3
+                    label.form-label(for='long') Longitude 
+                    input#long.form-control(type='number' step="0.00000001" required min="-180" max="180" autocomplete="off")
+                    small#emailHelp.form-text.text-muted cth: -6,0123
+              .mb-3
+                label.form-label(for='maps') Goggle Maps url
+                input#maps.form-control(type='text' autocomplete="off" required)
+              .mb-3
+                label.form-label(for='phone') Nomor Telepon
+                input#phone.form-control(type='text' autocomplete="off" required)
+              .mb-3
+                .form-group
+                  .form-check
+                    input#wedding.form-check-input(type='checkbox')
+                    label.form-check-label(for='wedding') Wedding
+              .mb-3
+                .form-group
+                  .form-check
+                    input#workshop.form-check-input(type='checkbox')
+                    label.form-check-label(for='workshop') Workshop
+              .mb-3
+                .form-group
+                  .form-check
+                    input#library.form-check-input(type='checkbox')
+                    label.form-check-label(for='library') Library
+
+              .mb-3
+                label.form-label(for='imageCover') Gambar Cover
+                input#imageCover.form-control(type='file' accept='image/*' name='imageCover')              
+              .mb-3
+                label.form-label(for='images') Gambar Lain
+                input#images.form-control(type='file' accept='image/*' name='images' multiple max=3)              
+                small#emailHelp.form-text.text-muted max 3
+          .modal-footer
+            button.btn.btn-light(type='button' data-bs-dismiss='modal') batal
+            button.btn.btn-success.btn-create(type='submit' form="formmasjid") Tambah
+    
+    //- #modalUpdate.modal.fade(tabindex='-1' aria-labelledby='modalDetail' aria-hidden='true')
+    //-   .modal-dialog.modal-dialog-scrollable
+    //-     .modal-content
+    //-       .modal-header
+    //-         h5#modalDetail.modal-title Edit Team
+    //-         button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+    //-       .modal-body
+    //-         form.form--updateTeam#formUpdateTeam
+    //-           input#teamId(type="hidden")
+              
+    //-           .mb-3
+    //-             label.form-label(for='name') Name
+    //-             input#nameU.form-control(type='text' autocomplete="off" )
+    //-           .mb-3
+    //-             label.form-label(for='shortName') short name
+    //-             input#shortNameU.form-control(type='text' autocomplete="off")
+    //-           .mb-3
+    //-             label.form-label(for='achievement') achievement
+    //-             textarea#achievementU.form-control(rows='3')
+    //-           .mb-3
+    //-             label.form-label(for='description') description
+    //-             textarea#descriptionU.form-control(rows='3')
+    //-           .mb-3  
+    //-             label.form-label.d-block(for='logo') Logo images
+    //-             <img src="" class="img-thumbnail img-logo mb-3" width="100" alt="">
+    //-             input#logoU.form-control(type='file' accept='image/*' name='logo')
+    //-           .mb-3 
+    //-       .modal-footer
+    //-         button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
+    //-         button.btn.btn-primary(type='submit' form="formUpdateTeam") Save changes

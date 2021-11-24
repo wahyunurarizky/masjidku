@@ -24,7 +24,8 @@ exports.createMasjid = base.createOne(
   'phone',
   'available_wedding',
   'available_workshop',
-  'available_library'
+  'available_library',
+  'maps_url'
 );
 exports.updateMasjid = base.updateOne(
   Masjid,
@@ -39,7 +40,8 @@ exports.updateMasjid = base.updateOne(
   'phone',
   'available_wedding',
   'available_workshop',
-  'available_library'
+  'available_library',
+  'maps_url'
 );
 exports.deleteMasjid = base.deleteOne(Masjid);
 
@@ -79,35 +81,36 @@ exports.resizeMasjidImages = catchAsync(async (req, res, next) => {
   if (req.files === undefined) {
     return next();
   }
-  if (!req.files.imageCover || !req.files.images) {
-    return next();
+  if (req.files.imageCover) {
+    const imageCoverSharp = await sharp(req.files.imageCover[0].buffer)
+      .resize(2000, 1333)
+      .toFormat('jpeg')
+      .jpeg({ quality: 90 })
+      .toBuffer();
+
+    const imageCoverCloud = await streamUpload(imageCoverSharp);
+    req.body.imageCoverId = imageCoverCloud.public_id;
+    req.body.imageCoverUrl = imageCoverCloud.secure_url;
+  }
+  console.log(req.files);
+  if (req.files.images) {
+    const imagesSharp = await Promise.all(
+      req.files.images.map(
+        async (file) =>
+          await sharp(file.buffer)
+            .resize(2000, 1333)
+            .toFormat('jpeg')
+            .jpeg({ quality: 90 })
+            .toBuffer()
+      )
+    );
+    const imagesCloud = await Promise.all(
+      imagesSharp.map(async (d) => await streamUpload(d))
+    );
+    req.body.imagesId = imagesCloud.map((d) => d.public_id);
+    req.body.imagesUrl = imagesCloud.map((d) => d.secure_url);
   }
 
-  const imageCoverSharp = await sharp(req.files.imageCover[0].buffer)
-    .resize(2000, 1333)
-    .toFormat('jpeg')
-    .jpeg({ quality: 90 })
-    .toBuffer();
-
-  const imageCoverCloud = await streamUpload(imageCoverSharp);
-  req.body.imageCoverId = imageCoverCloud.public_id;
-  req.body.imageCoverUrl = imageCoverCloud.secure_url;
-
-  const imagesSharp = await Promise.all(
-    req.files.images.map(
-      async (file) =>
-        await sharp(file.buffer)
-          .resize(2000, 1333)
-          .toFormat('jpeg')
-          .jpeg({ quality: 90 })
-          .toBuffer()
-    )
-  );
-  const imagesCloud = await Promise.all(
-    imagesSharp.map(async (d) => await streamUpload(d))
-  );
-  req.body.imagesId = imagesCloud.map((d) => d.public_id);
-  req.body.imagesUrl = imagesCloud.map((d) => d.secure_url);
   next();
 });
 

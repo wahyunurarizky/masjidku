@@ -7,8 +7,8 @@ const masjidSchema = mongoose.Schema(
       required: [true, 'a mosque must have a name'],
       trim: true,
       maxlength: [
-        40,
-        'a mosque name must have less or equal than 40 characters',
+        50,
+        'a mosque name must have less or equal than 50 characters',
       ],
       minlength: [
         10,
@@ -44,6 +44,7 @@ const masjidSchema = mongoose.Schema(
       },
       coordinates: [Number],
       address: String,
+      maps_url: String,
     },
     phone: String,
     available_wedding: {

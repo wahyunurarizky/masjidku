@@ -4,7 +4,8 @@ import 'regenerator-runtime/runtime';
 // import '@babel/polyfill';
 import 'bootstrap';
 import { login, logout } from './login';
-// import { createTeam, deleteTeam, updateTeam, fillForm } from './manageTeam';
+import { createMasjid, deleteMasjid } from './manageMasjid';
+// import { createMasjid, deleteTeam, updateTeam, fillForm } from './manageTeam';
 // import { createPlayer, deletePlayer } from './managePlayers';
 // import { addResult, updateResult } from './manageResults';
 // import { detailPlayer } from './detailPlayer';
@@ -13,10 +14,10 @@ import { login, logout } from './login';
 // import { createNews, deleteNews } from './manageNews';
 
 const loginForm = document.querySelector('.form-login');
-// const formAddTeam = document.querySelector('.form--addTeam');
+const formAddMasjid = document.querySelector('.form--addMasjid');
 // const formUpdateTeam = document.querySelector('.form--updateTeam');
 // const editButton = document.querySelectorAll('.edit-team');
-// const deleteButton = document.querySelectorAll('.delete-team');
+const deleteButton = document.querySelectorAll('.delete-masjid');
 // const formAddPlayer = document.querySelector('.form--addPlayer');
 // const deletePlayerButton = document.querySelectorAll('.delete-player');
 // const addResultButton = document.querySelectorAll('.button-add-result');
@@ -38,23 +39,54 @@ if (loginForm) {
   });
 }
 
-// if (formAddTeam) {
-//   formAddTeam.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     // sama aja buat multipar/form-data
-//     const form = new FormData();
-//     // const name = document.getElementById('name').value;
-//     // const shortName = document.getElementById('shortName').value;
+if (formAddMasjid) {
+  formAddMasjid.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // sama aja buat multipar/form-data
+    const form = new FormData();
+    // const name = document.getElementById('name').value;
+    // const shortName = document.getElementById('shortName').value;
 
-//     form.append('name', document.getElementById('name').value);
-//     form.append('shortName', document.getElementById('shortName').value);
-//     form.append('achievement', document.getElementById('achievement').value);
-//     form.append('description', document.getElementById('description').value);
-//     form.append('logo', document.getElementById('logo').files[0]);
-//     // console.log(document.getElementById('logo').files[0]);
-//     createTeam(form);
-//   });
-// }
+    form.append('name', document.getElementById('name').value);
+    form.append(
+      'location',
+      JSON.stringify({
+        address: document.getElementById('address').value,
+        coordinates: [
+          document.getElementById('long').value,
+          document.getElementById('lat').value,
+        ],
+        maps_url: document.getElementById('maps').value,
+      })
+    );
+    form.append('phone', document.getElementById('phone').value);
+    form.append(
+      'available_wedding',
+      document.getElementById('wedding').checked
+    );
+    form.append(
+      'available_workshop',
+      document.getElementById('workshop').checked
+    );
+    form.append(
+      'available_library',
+      document.getElementById('library').checked
+    );
+    form.append('imageCover', document.getElementById('imageCover').files[0]);
+    const images = document.getElementById('images').files;
+    for (let i = 0; i < images.length; i++) {
+      form.append('images', images[i]);
+    }
+
+    // form.append('images[]', document.getElementById('images').files[1]);
+    // form.append('images[]', document.getElementById('images').files[2]);
+    // console.log(document.getElementById('logo').files[0]);
+    for (var pair of form.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+    createMasjid(form);
+  });
+}
 // if (formUpdateTeam) {
 //   formUpdateTeam.addEventListener('submit', (e) => {
 //     e.preventDefault();
@@ -73,14 +105,14 @@ if (loginForm) {
 //   });
 // }
 
-// if (deleteButton) {
-//   deleteButton.forEach((button) => {
-//     button.addEventListener('click', (e) => {
-//       e.preventDefault();
-//       deleteTeam(button.dataset['id']);
-//     });
-//   });
-// }
+if (deleteButton) {
+  deleteButton.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      deleteMasjid(button.dataset['id']);
+    });
+  });
+}
 // if (editButton) {
 //   editButton.forEach((button) => {
 //     // console.log(button);

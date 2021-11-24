@@ -24155,6 +24155,219 @@ var logout = /*#__PURE__*/function () {
 }();
 
 exports.logout = logout;
+},{"axios":"../../node_modules/axios/index.js"}],"manageMasjid.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.updateTeam = exports.fillForm = exports.deleteMasjid = exports.createMasjid = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var btnCreate = document.querySelector('.btn-create');
+
+var createMasjid = /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(data) {
+    var url, res;
+    return regeneratorRuntime.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            btnCreate.innerHTML = 'loading...';
+            console.log(data);
+            _context.prev = 2;
+            url = '/api/v1/masjid';
+            _context.next = 6;
+            return (0, _axios.default)({
+              method: 'post',
+              url: url,
+              data: data
+            });
+
+          case 6:
+            res = _context.sent;
+
+            if (res.data.status === 'success') {
+              alert('successfull');
+              location.reload();
+            }
+
+            btnCreate.innerHTML = 'Tambah';
+            _context.next = 15;
+            break;
+
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context["catch"](2);
+            btnCreate.innerHTML = 'Tambah';
+            alert(_context.t0.response.data.message);
+
+          case 15:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[2, 11]]);
+  }));
+
+  return function createMasjid(_x) {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+exports.createMasjid = createMasjid;
+
+var deleteMasjid = /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(id) {
+    var url;
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            if (confirm('yakin?')) {
+              _context2.next = 2;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 2:
+            _context2.prev = 2;
+            url = "/api/v1/masjid/".concat(id);
+            _context2.next = 6;
+            return (0, _axios.default)({
+              method: 'delete',
+              url: url
+            });
+
+          case 6:
+            alert('successfull');
+            location.reload();
+            _context2.next = 13;
+            break;
+
+          case 10:
+            _context2.prev = 10;
+            _context2.t0 = _context2["catch"](2);
+            alert(_context2.t0.response.data.message);
+
+          case 13:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, null, [[2, 10]]);
+  }));
+
+  return function deleteMasjid(_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}();
+
+exports.deleteMasjid = deleteMasjid;
+
+var fillForm = /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(id) {
+    var url, resGet, team;
+    return regeneratorRuntime.wrap(function _callee3$(_context3) {
+      while (1) {
+        switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            url = "/api/v1/teams/".concat(id);
+            _context3.next = 4;
+            return (0, _axios.default)({
+              method: 'get',
+              url: url
+            });
+
+          case 4:
+            resGet = _context3.sent;
+            team = resGet.data.data.doc;
+            document.getElementById('teamId').value = team._id;
+            document.getElementById('nameU').value = team.name;
+            document.getElementById('shortNameU').value = team.shortName;
+            document.getElementById('achievementU').value = team.achievement;
+            document.getElementById('descriptionU').value = team.description;
+            document.querySelector('.img-logo').setAttribute('src', "/img/teams/".concat(team.logo)); // document.getElementById('logoU').value = team.logo;
+
+            _context3.next = 17;
+            break;
+
+          case 14:
+            _context3.prev = 14;
+            _context3.t0 = _context3["catch"](0);
+            alert(_context3.t0);
+
+          case 17:
+          case "end":
+            return _context3.stop();
+        }
+      }
+    }, _callee3, null, [[0, 14]]);
+  }));
+
+  return function fillForm(_x3) {
+    return _ref3.apply(this, arguments);
+  };
+}();
+
+exports.fillForm = fillForm;
+
+var updateTeam = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(data, teamId) {
+    var url, res;
+    return regeneratorRuntime.wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            teamId;
+            _context4.prev = 1;
+            url = "/api/v1/teams/".concat(teamId);
+            _context4.next = 5;
+            return (0, _axios.default)({
+              method: 'PATCH',
+              url: url,
+              data: data
+            });
+
+          case 5:
+            res = _context4.sent;
+
+            if (res.data.status === 'success') {
+              alert('successfull');
+              location.reload();
+            }
+
+            _context4.next = 12;
+            break;
+
+          case 9:
+            _context4.prev = 9;
+            _context4.t0 = _context4["catch"](1);
+            alert(_context4.t0.response.data.message);
+
+          case 12:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, null, [[1, 9]]);
+  }));
+
+  return function updateTeam(_x4, _x5) {
+    return _ref4.apply(this, arguments);
+  };
+}();
+
+exports.updateTeam = updateTeam;
 },{"axios":"../../node_modules/axios/index.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
@@ -24166,20 +24379,26 @@ require("bootstrap");
 
 var _login = require("./login");
 
-/* eslint-disable node/no-unsupported-features/es-syntax */
-// import '@babel/polyfill';
-// import { createTeam, deleteTeam, updateTeam, fillForm } from './manageTeam';
+var _manageMasjid = require("./manageMasjid");
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+// import { createMasjid, deleteTeam, updateTeam, fillForm } from './manageTeam';
 // import { createPlayer, deletePlayer } from './managePlayers';
 // import { addResult, updateResult } from './manageResults';
 // import { detailPlayer } from './detailPlayer';
 // import { resultDetail } from './resultDetail';
 // import { createStreamer, deleteStreamer } from './manageStreamer';
 // import { createNews, deleteNews } from './manageNews';
-var loginForm = document.querySelector('.form-login'); // const formAddTeam = document.querySelector('.form--addTeam');
-// const formUpdateTeam = document.querySelector('.form--updateTeam');
+var loginForm = document.querySelector('.form-login');
+var formAddMasjid = document.querySelector('.form--addMasjid'); // const formUpdateTeam = document.querySelector('.form--updateTeam');
 // const editButton = document.querySelectorAll('.edit-team');
-// const deleteButton = document.querySelectorAll('.delete-team');
-// const formAddPlayer = document.querySelector('.form--addPlayer');
+
+var deleteButton = document.querySelectorAll('.delete-masjid'); // const formAddPlayer = document.querySelector('.form--addPlayer');
 // const deletePlayerButton = document.querySelectorAll('.delete-player');
 // const addResultButton = document.querySelectorAll('.button-add-result');
 // const formUpdateResult = document.querySelector('.form--addResult');
@@ -24199,23 +24418,52 @@ if (loginForm) {
     var password = document.getElementById('password').value;
     (0, _login.login)(email, password);
   });
-} // if (formAddTeam) {
-//   formAddTeam.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     // sama aja buat multipar/form-data
-//     const form = new FormData();
-//     // const name = document.getElementById('name').value;
-//     // const shortName = document.getElementById('shortName').value;
-//     form.append('name', document.getElementById('name').value);
-//     form.append('shortName', document.getElementById('shortName').value);
-//     form.append('achievement', document.getElementById('achievement').value);
-//     form.append('description', document.getElementById('description').value);
-//     form.append('logo', document.getElementById('logo').files[0]);
-//     // console.log(document.getElementById('logo').files[0]);
-//     createTeam(form);
-//   });
-// }
-// if (formUpdateTeam) {
+}
+
+if (formAddMasjid) {
+  formAddMasjid.addEventListener('submit', function (e) {
+    e.preventDefault(); // sama aja buat multipar/form-data
+
+    var form = new FormData(); // const name = document.getElementById('name').value;
+    // const shortName = document.getElementById('shortName').value;
+
+    form.append('name', document.getElementById('name').value);
+    form.append('location', JSON.stringify({
+      address: document.getElementById('address').value,
+      coordinates: [document.getElementById('long').value, document.getElementById('lat').value],
+      maps_url: document.getElementById('maps').value
+    }));
+    form.append('phone', document.getElementById('phone').value);
+    form.append('available_wedding', document.getElementById('wedding').checked);
+    form.append('available_workshop', document.getElementById('workshop').checked);
+    form.append('available_library', document.getElementById('library').checked);
+    form.append('imageCover', document.getElementById('imageCover').files[0]);
+    var images = document.getElementById('images').files;
+
+    for (var i = 0; i < images.length; i++) {
+      form.append('images', images[i]);
+    } // form.append('images[]', document.getElementById('images').files[1]);
+    // form.append('images[]', document.getElementById('images').files[2]);
+    // console.log(document.getElementById('logo').files[0]);
+
+
+    var _iterator = _createForOfIteratorHelper(form.entries()),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var pair = _step.value;
+        console.log(pair[0] + ', ' + pair[1]);
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    (0, _manageMasjid.createMasjid)(form);
+  });
+} // if (formUpdateTeam) {
 //   formUpdateTeam.addEventListener('submit', (e) => {
 //     e.preventDefault();
 //     // sama aja buat multipar/form-data
@@ -24231,15 +24479,16 @@ if (loginForm) {
 //     updateTeam(formU, document.getElementById('teamId').value);
 //   });
 // }
-// if (deleteButton) {
-//   deleteButton.forEach((button) => {
-//     button.addEventListener('click', (e) => {
-//       e.preventDefault();
-//       deleteTeam(button.dataset['id']);
-//     });
-//   });
-// }
-// if (editButton) {
+
+
+if (deleteButton) {
+  deleteButton.forEach(function (button) {
+    button.addEventListener('click', function (e) {
+      e.preventDefault();
+      (0, _manageMasjid.deleteMasjid)(button.dataset['id']);
+    });
+  });
+} // if (editButton) {
 //   editButton.forEach((button) => {
 //     // console.log(button);
 //     button.addEventListener('click', (e) => {
@@ -24396,7 +24645,7 @@ window.addEventListener('DOMContentLoaded', function (event) {
     });
   });
 });
-},{"core-js/stable":"../../node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","bootstrap":"../../node_modules/bootstrap/dist/js/bootstrap.esm.js","./login":"login.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"core-js/stable":"../../node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"../../node_modules/regenerator-runtime/runtime.js","bootstrap":"../../node_modules/bootstrap/dist/js/bootstrap.esm.js","./login":"login.js","./manageMasjid":"manageMasjid.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
