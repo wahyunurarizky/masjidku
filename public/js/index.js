@@ -1,9 +1,9 @@
-// /* eslint-disable node/no-unsupported-features/es-syntax */
-// import 'core-js/stable';
-// import 'regenerator-runtime/runtime';
-// // import '@babel/polyfill';
-// import 'bootstrap';
-// import { login, logout } from './login';
+/* eslint-disable node/no-unsupported-features/es-syntax */
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+// import '@babel/polyfill';
+import 'bootstrap';
+import { login, logout } from './login';
 // import { createTeam, deleteTeam, updateTeam, fillForm } from './manageTeam';
 // import { createPlayer, deletePlayer } from './managePlayers';
 // import { addResult, updateResult } from './manageResults';
@@ -12,7 +12,7 @@
 // import { createStreamer, deleteStreamer } from './manageStreamer';
 // import { createNews, deleteNews } from './manageNews';
 
-// const loginForm = document.querySelector('.form-login');
+const loginForm = document.querySelector('.form-login');
 // const formAddTeam = document.querySelector('.form--addTeam');
 // const formUpdateTeam = document.querySelector('.form--updateTeam');
 // const editButton = document.querySelectorAll('.edit-team');
@@ -27,16 +27,16 @@
 // const deleteStreamerButton = document.querySelectorAll('.delete-streamer');
 // const formAddNews = document.querySelector('.form--addNews');
 // const deleteNewsButton = document.querySelectorAll('.delete-news');
-// const btnLogout = document.querySelector('.btn-logout');
+const btnLogout = document.querySelector('.btn-logout');
 
-// if (loginForm) {
-//   loginForm.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     const email = document.getElementById('email').value;
-//     const password = document.getElementById('password').value;
-//     login(email, password);
-//   });
-// }
+if (loginForm) {
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    login(email, password);
+  });
+}
 
 // if (formAddTeam) {
 //   formAddTeam.addEventListener('submit', (e) => {
@@ -224,9 +224,9 @@
 //   });
 // }
 
-// if (btnLogout) {
-//   btnLogout.addEventListener('click', logout);
-// }
+if (btnLogout) {
+  btnLogout.addEventListener('click', logout);
+}
 
 window.addEventListener('DOMContentLoaded', (event) => {
   // Activate Bootstrap scrollspy on the main nav element

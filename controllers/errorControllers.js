@@ -46,7 +46,7 @@ const sendErrorDev = (err, req, res) => {
     console.error('ERROR', err);
     res.status(err.statusCode).render('error', {
       title: 'something went wrong',
-      message: err.message,
+      msg: err.message,
     });
   }
 };
