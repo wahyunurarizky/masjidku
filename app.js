@@ -13,6 +13,7 @@ const AppError = require('./utils/appError');
 
 const userRouter = require('./routes/userRoutes');
 const masjidRouter = require('./routes/masjidRoutes');
+const adminViewRouter = require('./routes/adminViewRoutes');
 const mainViewRouter = require('./routes/mainViewRoutes');
 
 // *****************************declare app**************************
@@ -61,6 +62,7 @@ app.use(compression());
 // serving static files
 app.use(express.static(`${__dirname}/public`));
 
+app.use('/admin', adminViewRouter);
 app.use('/', mainViewRouter);
 
 app.use('/api/v1/users', userRouter);
