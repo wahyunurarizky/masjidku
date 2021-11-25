@@ -1,10 +1,16 @@
-/* eslint-disable node/no-unsupported-features/es-syntax */
+/* eslint-disable */
+
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 // import '@babel/polyfill';
 import 'bootstrap';
 import { login, logout } from './login';
-import { createMasjid, deleteMasjid } from './manageMasjid';
+import {
+  createMasjid,
+  deleteMasjid,
+  fillForm,
+  updateMasjid,
+} from './manageMasjid';
 // import { createMasjid, deleteTeam, updateTeam, fillForm } from './manageTeam';
 // import { createPlayer, deletePlayer } from './managePlayers';
 // import { addResult, updateResult } from './manageResults';
@@ -15,8 +21,8 @@ import { createMasjid, deleteMasjid } from './manageMasjid';
 
 const loginForm = document.querySelector('.form-login');
 const formAddMasjid = document.querySelector('.form--addMasjid');
-// const formUpdateTeam = document.querySelector('.form--updateTeam');
-// const editButton = document.querySelectorAll('.edit-team');
+const formUpdateMasjid = document.querySelector('.form--updateMasjid');
+const editButton = document.querySelectorAll('.edit-masjid');
 const deleteButton = document.querySelectorAll('.delete-masjid');
 // const formAddPlayer = document.querySelector('.form--addPlayer');
 // const deletePlayerButton = document.querySelectorAll('.delete-player');
@@ -81,32 +87,63 @@ if (formAddMasjid) {
       form.append('images', images[i]);
     }
 
-    // form.append('images[]', document.getElementById('images').files[1]);
-    // form.append('images[]', document.getElementById('images').files[2]);
-    // console.log(document.getElementById('logo').files[0]);
-    for (var pair of form.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
     createMasjid(form);
   });
 }
-// if (formUpdateTeam) {
-//   formUpdateTeam.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     // sama aja buat multipar/form-data
-//     const formU = new FormData();
-//     // const name = document.getElementById('name').value;
-//     // const shortName = document.getElementById('shortName').value;
 
-//     formU.append('name', document.getElementById('nameU').value);
-//     formU.append('shortName', document.getElementById('shortNameU').value);
-//     formU.append('achievement', document.getElementById('achievementU').value);
-//     formU.append('description', document.getElementById('descriptionU').value);
-//     formU.append('logo', document.getElementById('logoU').files[0]);
-//     // console.log(document.getElementById('logo').files[0]);
-//     updateTeam(formU, document.getElementById('teamId').value);
-//   });
-// }
+if (formUpdateMasjid) {
+  formUpdateMasjid.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // sama aja buat multipar/form-data
+    const formU = new FormData();
+    // const name = document.getElementById('name').value;
+    // const shortName = document.getElementById('shortName').value;
+
+    formU.append('name', document.getElementById('nameU').value);
+    formU.append(
+      'location',
+      JSON.stringify({
+        type: 'Point',
+        address: document.getElementById('addressU').value,
+        coordinates: [
+          document.getElementById('longU').value,
+          document.getElementById('latU').value,
+        ],
+        maps_url: document.getElementById('mapsU').value,
+      })
+    );
+    formU.append('phone', document.getElementById('phoneU').value);
+    formU.append(
+      'available_wedding',
+      document.getElementById('weddingU').checked
+    );
+    formU.append(
+      'available_workshop',
+      document.getElementById('workshopU').checked
+    );
+    formU.append(
+      'available_library',
+      document.getElementById('libraryU').checked
+    );
+    formU.append('desc_wedding', document.getElementById('descweddingU').value);
+    formU.append(
+      'desc_workshop',
+      document.getElementById('descworkshopU').value
+    );
+    formU.append('desc_library', document.getElementById('desclibraryU').value);
+    formU.append('imageCover', document.getElementById('imageCoverU').files[0]);
+    const images = document.getElementById('imagesU').files;
+    for (let i = 0; i < images.length; i++) {
+      formU.append('images', images[i]);
+    }
+    for (var pair of formU.entries()) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+
+    // console.log(document.getElementById('logo').files[0]);
+    updateMasjid(formU, document.getElementById('masjidId').value);
+  });
+}
 
 if (deleteButton) {
   deleteButton.forEach((button) => {
@@ -116,15 +153,15 @@ if (deleteButton) {
     });
   });
 }
-// if (editButton) {
-//   editButton.forEach((button) => {
-//     // console.log(button);
-//     button.addEventListener('click', (e) => {
-//       e.preventDefault();
-//       fillForm(button.dataset['id']);
-//     });
-//   });
-// }
+if (editButton) {
+  editButton.forEach((button) => {
+    // console.log(button);
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      fillForm(button.dataset['id']);
+    });
+  });
+}
 
 // if (addResultButton) {
 //   addResultButton.forEach((button) => {

@@ -30,6 +30,12 @@ router.patch(
   '/:id',
   masjidController.uploadMasjidImages,
   masjidController.resizeMasjidImages,
+  (req, res, next) => {
+    if (typeof req.body.location !== 'object') {
+      req.body.location = JSON.parse(req.body.location);
+    }
+    next();
+  },
   masjidController.updateMasjid
 );
 router.delete('/:id', masjidController.deleteMasjid);

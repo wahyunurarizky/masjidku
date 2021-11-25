@@ -99,6 +99,73 @@ block content
           .modal-footer
             button.btn.btn-light(type='button' data-bs-dismiss='modal') batal
             button.btn.btn-success.btn-create(type='submit' form="formmasjid") Tambah
+
+    #modalUpdate.modal.fade(tabindex='-1' aria-labelledby='modalUpdateLabel' aria-hidden='true')
+      .modal-dialog.modal-dialog-scrollable
+        .modal-content
+          .modal-header
+            h5#modalUpdateLabel.modal-title Edit Masjid
+            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+          .modal-body
+            form.form--updateMasjid#formupdatemasjid
+              input#masjidId(type="hidden")
+              .mb-3
+                label.form-label(for='nameU') Nama
+                input#nameU.form-control(type='text' autocomplete="off" required)
+              .mb-3
+                label.form-label(for='addressU') Alamat
+                input#addressU.form-control(type='text' autocomplete="off" required)
+              .row 
+                .col-6
+                  .mb-3
+                    label.form-label(for='latU') Latitude
+                    input#latU.form-control(type='number' required step="0.00000001" min="-90" max="90" autocomplete="off")
+                    small#emailHelp.form-text.text-muted cth: -6,0123
+                .col-6
+                  .mb-3
+                    label.form-label(for='longU') Longitude 
+                    input#longU.form-control(type='number' step="0.00000001" required min="-180" max="180" autocomplete="off")
+                    small#emailHelp.form-text.text-muted cth: -6,0123
+              .mb-3
+                label.form-label(for='mapsU') Goggle Maps url
+                input#mapsU.form-control(type='text' autocomplete="off" required)
+              .mb-3
+                label.form-label(for='phoneU') Nomor Telepon
+                input#phoneU.form-control(type='text' autocomplete="off" required)
+              .mb-3
+                .form-group
+                  .form-check
+                    input#weddingU.form-check-input(type='checkbox')
+                    label.form-check-label(for='weddingU') Wedding
+              .mb-3
+                label.form-label(for='descweddingU') Deskripsi Wedding
+                input#descweddingU.form-control(type='text' autocomplete="off")
+              .mb-3
+                .form-group
+                  .form-check
+                    input#workshopU.form-check-input(type='checkbox')
+                    label.form-check-label(for='workshopU') Workshop
+              .mb-3
+                label.form-label(for='descworkshopU') Deskripsi Workshop
+                input#descworkshopU.form-control(type='text' autocomplete="off")
+              .mb-3
+                .form-group
+                  .form-check
+                    input#libraryU.form-check-input(type='checkbox')
+                    label.form-check-label(for='libraryU') Library
+              .mb-3
+                label.form-label(for='desclibraryU') Deskripsi Library
+                input#desclibraryU.form-control(type='text' autocomplete="off")
+              .mb-3
+                label.form-label(for='imageCoverU') Gambar Cover
+                input#imageCoverU.form-control(type='file' accept='image/*' name='imageCover')              
+              .mb-3
+                label.form-label(for='imagesU') Gambar Lain
+                input#imagesU.form-control(type='file' accept='image/*' name='images' multiple max=3)              
+                small#emailHelp.form-text.text-muted max 3
+          .modal-footer
+            button.btn.btn-light(type='button' data-bs-dismiss='modal') batal
+            button.btn.btn-success.btn-update(type='submit' form="formupdatemasjid") Update
     
     //- #modalUpdate.modal.fade(tabindex='-1' aria-labelledby='modalDetail' aria-hidden='true')
     //-   .modal-dialog.modal-dialog-scrollable

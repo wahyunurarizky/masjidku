@@ -1,5 +1,8 @@
+/* eslint-disable */
+
 import axios from 'axios';
 const btnCreate = document.querySelector('.btn-create');
+const btnUpdate = document.querySelector('.btn-update');
 
 export const createMasjid = async (data) => {
   btnCreate.innerHTML = 'loading...';
@@ -46,33 +49,45 @@ export const deleteMasjid = async (id) => {
 
 export const fillForm = async (id) => {
   try {
-    const url = `/api/v1/teams/${id}`;
+    const url = `/api/v1/masjid/${id}`;
 
     const resGet = await axios({
       method: 'get',
       url,
     });
 
-    const team = resGet.data.data.doc;
+    const masjid = resGet.data.data.doc;
 
-    document.getElementById('teamId').value = team._id;
-    document.getElementById('nameU').value = team.name;
-    document.getElementById('shortNameU').value = team.shortName;
-    document.getElementById('achievementU').value = team.achievement;
-    document.getElementById('descriptionU').value = team.description;
-    document
-      .querySelector('.img-logo')
-      .setAttribute('src', `/img/teams/${team.logo}`);
+    document.getElementById('masjidId').value = masjid._id;
+    document.getElementById('nameU').value = masjid.name;
+    document.getElementById('addressU').value = masjid.location.address;
+    document.getElementById('latU').value = masjid.location.coordinates[1];
+    document.getElementById('longU').value = masjid.location.coordinates[0];
+    document.getElementById('mapsU').value = masjid.location.maps_url;
+    document.getElementById('phoneU').value = masjid.phone;
+    document.getElementById('descweddingU').value = masjid.desc_wedding;
+    document.getElementById('descworkshopU').value = masjid.desc_workshop;
+    document.getElementById('desclibraryU').value = masjid.desc_library;
+    if (masjid.available_wedding)
+      document.getElementById('weddingU').checked = true;
+    if (masjid.available_workshop)
+      document.getElementById('workshopU').checked = true;
+    if (masjid.available_library)
+      document.getElementById('libraryU').checked = true;
+    // document
+    //   .querySelector('.img-logo')
+    //   .setAttribute('src', `/img/masjids/${masjid.logo}`);
     // document.getElementById('logoU').value = team.logo;
   } catch (err) {
     alert(err);
   }
 };
 
-export const updateTeam = async (data, teamId) => {
-  teamId;
+export const updateMasjid = async (data, masjidId) => {
+  btnUpdate.innerHTML = 'loading...';
+
   try {
-    const url = `/api/v1/teams/${teamId}`;
+    const url = `/api/v1/masjid/${masjidId}`;
 
     const res = await axios({
       method: 'PATCH',
