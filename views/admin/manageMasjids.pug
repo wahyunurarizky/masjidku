@@ -29,7 +29,7 @@ block content
                   a(href=`/admin/manage-masjid/${masjid.id}`)
                     span.badge.bg-primary.fw-lighter.me-2 detail
                   a.edit-masjid(href='#' data-bs-toggle="modal" data-bs-target="#modalUpdate" data-id=`${masjid.id}`)
-                    span.badge.bg-warning.fw-lighter.text-dark.me-2 edit masjid
+                    span.badge.bg-warning.fw-lighter.text-dark.me-2 edit
                   a.delete-masjid(href='#' data-id=`${masjid.id}`)
                     span.badge.bg-danger.fw-lighter delete
     
@@ -71,16 +71,24 @@ block content
                     input#wedding.form-check-input(type='checkbox')
                     label.form-check-label(for='wedding') Wedding
               .mb-3
+                label.form-label(for='descwedding') Deskripsi Wedding
+                input#descwedding.form-control(type='text' autocomplete="off")
+              .mb-3
                 .form-group
                   .form-check
                     input#workshop.form-check-input(type='checkbox')
                     label.form-check-label(for='workshop') Workshop
               .mb-3
+                label.form-label(for='descworkshop') Deskripsi Workshop
+                input#descworkshop.form-control(type='text' autocomplete="off")
+              .mb-3
                 .form-group
                   .form-check
                     input#library.form-check-input(type='checkbox')
                     label.form-check-label(for='library') Library
-
+              .mb-3
+                label.form-label(for='desclibrary') Deskripsi Library
+                input#desclibrary.form-control(type='text' autocomplete="off")
               .mb-3
                 label.form-label(for='imageCover') Gambar Cover
                 input#imageCover.form-control(type='file' accept='image/*' name='imageCover')              

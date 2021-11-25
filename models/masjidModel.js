@@ -59,6 +59,9 @@ const masjidSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    desc_wedding: String,
+    desc_workshop: String,
+    desc_library: String,
     createdAt: {
       type: Date,
       default: Date.now(),

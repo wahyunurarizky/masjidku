@@ -23,6 +23,9 @@ exports.createMasjid = base.createOne(
   'ratingsQuantity',
   'phone',
   'available_wedding',
+  'desc_wedding',
+  'desc_workshop',
+  'desc_library',
   'available_workshop',
   'available_library',
   'maps_url'
@@ -41,7 +44,10 @@ exports.updateMasjid = base.updateOne(
   'available_wedding',
   'available_workshop',
   'available_library',
-  'maps_url'
+  'maps_url',
+  'desc_wedding',
+  'desc_workshop',
+  'desc_library'
 );
 exports.deleteMasjid = base.deleteOne(Masjid);
 

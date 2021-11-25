@@ -18,7 +18,7 @@ router.post(
   masjidController.uploadMasjidImages,
   masjidController.resizeMasjidImages,
   (req, res, next) => {
-    if (req.body.location !== 'object') {
+    if (typeof req.body.location !== 'object') {
       req.body.location = JSON.parse(req.body.location);
     }
     next();

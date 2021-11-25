@@ -1,0 +1,49 @@
+extends base
+
+block content
+  main.col-md-9.ms-sm-auto.col-lg-10.px-md-4
+    .container
+      .row.text-center.my-4
+        .col
+          h1=`${masjid.name}`
+          img(src=`${masjid.imageCoverUrl}` style="max-width: 70%;")
+      .row.py-4
+        .col 
+          iframe(src=`https://maps.google.com/maps?q=${masjid.location.coordinates[1]},${masjid.location.coordinates[0]}&z=15&output=embed` width="330" height="270" frameborder="0" style="border:0")
+          br
+          small
+            a(href=`${masjid.location.maps_url}` style='color:#0000FF;text-align:left' target='blank')
+              | See map bigger
+        .col 
+          h2 alamat 
+          p=masjid.location.address
+          h2 coordinates 
+          p=masjid.location.coordinates[0]+' , '+masjid.location.coordinates[0]
+          h2 phone 
+          p=masjid.phone
+      .row.py-4
+        .col-md-4 
+          h3 Wedding
+          if masjid.available_wedding
+            span.badge.bg-success tersedia
+            p=masjid.desc_wedding
+          else 
+            span.badge.bg-danger tidak tersedia
+        .col-md-4 
+          h3 Workshop
+          if masjid.available_workshop
+            span.badge.bg-success tersedia
+            p=masjid.desc_workshop
+          else 
+            span.badge.bg-danger tidak tersedia
+        .col-md-4 
+          h3 Library
+          if masjid.available_library
+            span.badge.bg-success tersedia
+            p=masjid.desc_library
+          else 
+            span.badge.bg-danger tidak tersedia
+      .row.py-4
+        each image in masjid.imagesUrl
+          .col-sm-4.mb-2
+            img.img-thumbnail(src=`${image}` alt='...' style="width: 100%")

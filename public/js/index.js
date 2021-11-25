@@ -72,6 +72,9 @@ if (formAddMasjid) {
       'available_library',
       document.getElementById('library').checked
     );
+    form.append('desc_wedding', document.getElementById('descwedding').value);
+    form.append('desc_workshop', document.getElementById('descworkshop').value);
+    form.append('desc_library', document.getElementById('desclibrary').value);
     form.append('imageCover', document.getElementById('imageCover').files[0]);
     const images = document.getElementById('images').files;
     for (let i = 0; i < images.length; i++) {

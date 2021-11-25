@@ -24437,6 +24437,9 @@ if (formAddMasjid) {
     form.append('available_wedding', document.getElementById('wedding').checked);
     form.append('available_workshop', document.getElementById('workshop').checked);
     form.append('available_library', document.getElementById('library').checked);
+    form.append('desc_wedding', document.getElementById('descwedding').value);
+    form.append('desc_workshop', document.getElementById('descworkshop').value);
+    form.append('desc_library', document.getElementById('desclibrary').value);
     form.append('imageCover', document.getElementById('imageCover').files[0]);
     var images = document.getElementById('images').files;
 
@@ -24673,7 +24676,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60756" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57079" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

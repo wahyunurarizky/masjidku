@@ -9,3 +9,11 @@ exports.manageMasjids = catchAsync(async (req, res, next) => {
     masjids,
   });
 });
+
+exports.showMasjid = catchAsync(async (req, res, next) => {
+  const masjid = await Masjid.findById(req.params.id);
+  res.status(200).render('admin/showMasjid.pug', {
+    title: 'manage players',
+    masjid,
+  });
+});
