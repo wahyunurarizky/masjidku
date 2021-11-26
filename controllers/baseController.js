@@ -18,6 +18,8 @@ exports.deleteOne = (Model) =>
       return next(new AppError('no docs found with that id', 404));
     }
     res.status(204).json({
+      success: true,
+      code: 204,
       status: 'success',
       data: null,
     });
@@ -40,9 +42,10 @@ exports.updateOne = (Model, ...fields) =>
       return next(new AppError('no docs found with that id', 404));
     }
     res.status(200).json({
-      status: 'success',
+      success: true,
+      code: 200,
       data: {
-        data: updatedDoc,
+        doc: updatedDoc,
       },
     });
   });
@@ -54,9 +57,10 @@ exports.createOne = (Model, ...fields) =>
     const doc = await Model.create(filteredBody);
 
     res.status(201).json({
-      status: 'success',
+      success: true,
+      code: 201,
       data: {
-        doc: doc,
+        doc,
       },
     });
   });
@@ -73,7 +77,8 @@ exports.getOne = (Model, popOptions) =>
     }
 
     res.status(200).json({
-      status: 'success',
+      success: true,
+      code: 200,
       data: {
         doc,
       },
@@ -105,7 +110,8 @@ exports.getAll = (Model, popOptions, search, sort) =>
     }
 
     res.status(200).json({
-      status: 'succcess',
+      success: true,
+      code: 200,
       results: docs.length,
       data: {
         docs,

@@ -142,7 +142,8 @@ exports.getMasjidByCoordinates = catchAsync(async (req, res, next) => {
   });
 
   res.status(200).json({
-    status: 'success',
+    success: true,
+    code: 200,
     results: masjids.length,
     data: {
       data: masjids,
