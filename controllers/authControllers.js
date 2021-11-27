@@ -111,7 +111,8 @@ exports.logout = (req, res) => {
     httpOnly: true,
   });
   res.status(200).json({
-    status: 'success',
+    success: true,
+    code: 200,
   });
 };
 
