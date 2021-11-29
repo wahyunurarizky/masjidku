@@ -28,6 +28,7 @@ const createSendToken = (user, statusCode, res) => {
   user.password = undefined;
 
   res.status(statusCode).json({
+    status: 'success',
     success: true,
     code: statusCode,
     token,
@@ -111,6 +112,7 @@ exports.logout = (req, res) => {
     httpOnly: true,
   });
   res.status(200).json({
+    status: 'success',
     success: true,
     code: 200,
   });

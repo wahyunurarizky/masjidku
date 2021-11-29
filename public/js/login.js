@@ -10,7 +10,7 @@ export const login = async (email, password) => {
         password,
       },
     });
-    if (res.data.status === 'success') {
+    if (res.data.success === 'success') {
       location.assign('/admin');
     }
   } catch (err) {

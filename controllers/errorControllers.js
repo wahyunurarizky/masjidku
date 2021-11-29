@@ -39,6 +39,7 @@ const sendErrorDev = (err, req, res) => {
     console.error('ERROR', err);
     res.status(err.statusCode).json({
       status: err.status,
+      success: false,
       message: err.message,
       stack: err.stack,
     });
@@ -54,6 +55,7 @@ const sendErrorProd = (err, req, res) => {
   if (req.originalUrl.startsWith('/api')) {
     if (err.isOperational) {
       return res.status(err.statusCode).json({
+        status: err.status,
         success: false,
         code: err.statusCode,
         message: err.message,
@@ -64,6 +66,7 @@ const sendErrorProd = (err, req, res) => {
 
     // programming or other unknown error
     return res.status(500).json({
+      status: 'error',
       success: false,
       code: 500,
       message: 'something went very wrong',

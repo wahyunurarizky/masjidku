@@ -42,6 +42,7 @@ exports.updateOne = (Model, ...fields) =>
       return next(new AppError('no docs found with that id', 404));
     }
     res.status(200).json({
+      status: 'success',
       success: true,
       code: 200,
       data: {
@@ -57,6 +58,7 @@ exports.createOne = (Model, ...fields) =>
     const doc = await Model.create(filteredBody);
 
     res.status(201).json({
+      status: 'success',
       success: true,
       code: 201,
       data: {
@@ -77,6 +79,7 @@ exports.getOne = (Model, popOptions) =>
     }
 
     res.status(200).json({
+      status: 'success',
       success: true,
       code: 200,
       data: {
@@ -110,6 +113,7 @@ exports.getAll = (Model, popOptions, search, sort) =>
     }
 
     res.status(200).json({
+      status: 'success',
       success: true,
       code: 200,
       results: docs.length,
