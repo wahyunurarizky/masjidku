@@ -30,6 +30,7 @@ const createSendToken = (user, statusCode, res) => {
   res.status(statusCode).json({
     status: 'success',
     success: true,
+    message: 'OK',
     code: `${statusCode}`,
     data: {
       token,
@@ -113,6 +114,7 @@ exports.logout = (req, res) => {
   res.status(200).json({
     status: 'success',
     success: true,
+    message: 'OK',
     code: '200',
   });
 };

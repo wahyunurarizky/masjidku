@@ -19,6 +19,7 @@ exports.deleteOne = (Model) =>
     }
     res.status(204).json({
       success: true,
+      message: 'OK',
       code: '204',
       status: 'success',
       data: null,
@@ -60,6 +61,7 @@ exports.createOne = (Model, ...fields) =>
     res.status(201).json({
       status: 'success',
       success: true,
+      message: 'OK',
       code: '201',
       data: {
         doc,
@@ -81,6 +83,7 @@ exports.getOne = (Model, popOptions) =>
     res.status(200).json({
       status: 'success',
       success: true,
+      message: 'OK',
       code: '200',
       data: {
         doc,
@@ -115,6 +118,7 @@ exports.getAll = (Model, popOptions, search, sort) =>
       status: 'success',
       success: true,
       code: '200',
+      message: 'OK',
       results: docs.length,
       data: {
         docs,
