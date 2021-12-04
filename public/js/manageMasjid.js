@@ -6,7 +6,6 @@ const btnUpdate = document.querySelector('.btn-update');
 
 export const createMasjid = async (data) => {
   btnCreate.innerHTML = 'loading...';
-  console.log(data);
   try {
     const url = '/api/v1/masjid';
 

@@ -19,7 +19,7 @@ exports.deleteOne = (Model) =>
     }
     res.status(204).json({
       success: true,
-      code: 204,
+      code: '204',
       status: 'success',
       data: null,
     });
@@ -44,7 +44,7 @@ exports.updateOne = (Model, ...fields) =>
     res.status(200).json({
       status: 'success',
       success: true,
-      code: 200,
+      code: '200',
       data: {
         doc: updatedDoc,
       },
@@ -60,7 +60,7 @@ exports.createOne = (Model, ...fields) =>
     res.status(201).json({
       status: 'success',
       success: true,
-      code: 201,
+      code: '201',
       data: {
         doc,
       },
@@ -81,7 +81,7 @@ exports.getOne = (Model, popOptions) =>
     res.status(200).json({
       status: 'success',
       success: true,
-      code: 200,
+      code: '200',
       data: {
         doc,
       },
@@ -100,7 +100,6 @@ exports.getAll = (Model, popOptions, search, sort) =>
 
     if (req.query.near) {
       const [lat, lng] = req.query.near.split(',');
-      console.log(lat, lng);
       docs = JSON.parse(JSON.stringify(docs)).map((d) => ({
         ...d,
         distance: calculateDistance(
@@ -115,7 +114,7 @@ exports.getAll = (Model, popOptions, search, sort) =>
     res.status(200).json({
       status: 'success',
       success: true,
-      code: 200,
+      code: '200',
       results: docs.length,
       data: {
         docs,

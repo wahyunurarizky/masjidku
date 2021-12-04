@@ -98,7 +98,6 @@ exports.resizeMasjidImages = catchAsync(async (req, res, next) => {
     req.body.imageCoverId = imageCoverCloud.public_id;
     req.body.imageCoverUrl = imageCoverCloud.secure_url;
   }
-  console.log(req.files);
   if (req.files.images) {
     const imagesSharp = await Promise.all(
       req.files.images.map(
@@ -144,7 +143,7 @@ exports.getMasjidByCoordinates = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     success: true,
-    code: 200,
+    code: '200',
     results: masjids.length,
     data: {
       data: masjids,

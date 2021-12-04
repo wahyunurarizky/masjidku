@@ -30,9 +30,9 @@ const createSendToken = (user, statusCode, res) => {
   res.status(statusCode).json({
     status: 'success',
     success: true,
-    code: statusCode,
-    token,
+    code: `${statusCode}`,
     data: {
+      token,
       user,
     },
   });
@@ -87,7 +87,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 exports.login = catchAsync(async (req, res, next) => {
   // basic desctructuring
   const { email, password } = req.body;
-  console.log(email, password);
   // if email and password exist
   if (!email || !password) {
     return next(new AppError('please provide email and password', 400));
@@ -114,7 +113,7 @@ exports.logout = (req, res) => {
   res.status(200).json({
     status: 'success',
     success: true,
-    code: 200,
+    code: '200',
   });
 };
 
@@ -266,8 +265,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 });
 
 exports.loginOnlyByName = catchAsync(async (req, res, next) => {
-  console.log('wkwk');
-
   const { name } = req.body;
 
   if (!name) {

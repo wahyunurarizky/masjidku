@@ -54,8 +54,6 @@ exports.updateUser = base.updateOne(User);
 exports.deleteUser = base.deleteOne(User);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  console.log(req.file);
-  console.log(req.body);
   // 1) Create error if user posts password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(
@@ -78,7 +76,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     success: true,
-    code: 200,
+    code: '200',
     data: {
       user,
     },
@@ -91,7 +89,7 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   res.status(204).json({
     status: 'success',
     success: true,
-    code: 204,
+    code: '204',
     data: null,
   });
 });

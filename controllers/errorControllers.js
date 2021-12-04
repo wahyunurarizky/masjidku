@@ -57,7 +57,7 @@ const sendErrorProd = (err, req, res) => {
       return res.status(err.statusCode).json({
         status: err.status,
         success: false,
-        code: err.statusCode,
+        code: `${err.statusCode}`,
         message: err.message,
         data: null,
       });
@@ -68,7 +68,7 @@ const sendErrorProd = (err, req, res) => {
     return res.status(500).json({
       status: 'error',
       success: false,
-      code: 500,
+      code: '500',
       message: 'something went very wrong',
       data: null,
     });
