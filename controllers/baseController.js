@@ -101,6 +101,10 @@ exports.getAll = (Model, popOptions, search, sort) =>
       .search(search);
     let docs = await features.query.populate(popOptions);
 
+    const x = await Model.find();
+
+    console.log('adsasd', x);
+
     if (req.query.near) {
       const [lat, lng] = req.query.near.split(',');
       docs = JSON.parse(JSON.stringify(docs)).map((d) => ({

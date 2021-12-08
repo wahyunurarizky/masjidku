@@ -4,6 +4,7 @@ const sharp = require('sharp');
 const streamifier = require('streamifier');
 
 const Masjid = require('../models/masjidModel');
+const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const cloudinary = require('../utils/cloudinary');
@@ -148,6 +149,53 @@ exports.getMasjidByCoordinates = catchAsync(async (req, res, next) => {
     results: masjids.length,
     data: {
       data: masjids,
+    },
+  });
+});
+
+exports.getMyBookmarks = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id)
+    .select('bookmarks')
+    .populate({ path: 'bookmarks', select: '-__v' });
+
+  res.status(200).json({
+    status: 'success',
+    success: true,
+    code: '200',
+    message: 'OK',
+    results: user.bookmarks.length,
+    data: {
+      docs: user.bookmarks,
+    },
+  });
+});
+function addOrRemove(array, value) {
+  const index = array.indexOf(value);
+
+  if (index === -1) {
+    array.push(value);
+  } else {
+    array.splice(index, 1);
+  }
+}
+
+exports.toggleBookmarks = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select('name bookmarks');
+
+  const arr = user.bookmarks;
+  console.log(arr);
+
+  addOrRemove(arr, '619ef400aef09eacb045b7b7');
+  user.bookmarks = arr;
+  await user.save();
+
+  res.status(200).json({
+    status: 'success',
+    success: true,
+    message: 'OK',
+    code: '200',
+    data: {
+      doc: user,
     },
   });
 });

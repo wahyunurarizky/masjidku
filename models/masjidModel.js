@@ -66,11 +66,11 @@ const masjidSchema = mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
-  },
-  {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
   }
+  // {
+  //   toJSON: { virtuals: true },
+  //   toObject: { virtuals: true },
+  // }
 );
 
 masjidSchema.index({ location: '2dsphere' });

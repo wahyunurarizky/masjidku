@@ -48,6 +48,13 @@ const userSchema = mongoose.Schema({
     default: true,
     select: false,
   },
+  bookmarks: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Masjid',
+      select: false,
+    },
+  ],
 });
 
 userSchema.index({
@@ -119,6 +126,14 @@ userSchema.methods.createPasswordResetToken = function () {
 
   return resetToken;
 };
+
+// userSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'bookmarks',
+//     select: '-__v',
+//   });
+//   next();
+// });
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

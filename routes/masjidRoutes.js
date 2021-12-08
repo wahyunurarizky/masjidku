@@ -5,6 +5,19 @@ const masjidController = require('../controllers/masjidControllers');
 const router = express.Router();
 
 router.get('/', masjidController.getAllMasjid);
+router.get(
+  '/my-bookmarks',
+  authController.protect,
+  authController.restrictTo('user'),
+  masjidController.getMyBookmarks
+);
+router.patch(
+  '/my-bookmarks/:masjidId',
+  authController.protect,
+  authController.restrictTo('user'),
+  masjidController.toggleBookmarks
+);
+
 router.get('/:id', masjidController.getOneMasjid);
 
 router
