@@ -183,9 +183,9 @@ exports.toggleBookmarks = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id).select('name bookmarks');
 
   const arr = user.bookmarks;
-  console.log(arr);
+  console.log(req.params);
 
-  addOrRemove(arr, '619ef400aef09eacb045b7b7');
+  addOrRemove(arr, req.params.masjidId);
   user.bookmarks = arr;
   await user.save();
 
