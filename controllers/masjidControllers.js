@@ -11,7 +11,37 @@ const cloudinary = require('../utils/cloudinary');
 const base = require('./baseController');
 
 exports.getAllMasjid = base.getAll(Masjid, [], ['name'], 'createdAt');
-exports.getOneMasjid = base.getOne(Masjid);
+exports.getOneMasjid = catchAsync(async (req, res, next) => {
+  const doc = await Masjid.findById(req.params.id);
+
+  if (!doc) {
+    return next(new AppError('no docs found with that id', 404));
+  }
+
+  let is_bookmarked = false;
+  if (req.userLogin) {
+    if (req.userLogin.bookmarks.includes(req.params.id)) {
+      is_bookmarked = true;
+    } else {
+      is_bookmarked = false;
+    }
+  }
+
+  const data = JSON.parse(JSON.stringify(doc));
+
+  res.status(200).json({
+    status: 'success',
+    success: true,
+    message: 'OK',
+    code: '200',
+    data: {
+      doc: {
+        is_bookmarked,
+        ...data,
+      },
+    },
+  });
+});
 exports.createMasjid = base.createOne(
   Masjid,
   'name',
@@ -174,18 +204,18 @@ function addOrRemove(array, value) {
 
   if (index === -1) {
     array.push(value);
-  } else {
-    array.splice(index, 1);
+    return true;
   }
+  array.splice(index, 1);
+  return false;
 }
 
 exports.toggleBookmarks = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id).select('name bookmarks');
 
   const arr = user.bookmarks;
-  console.log(req.params);
 
-  addOrRemove(arr, req.params.masjidId);
+  const is_bookmarked = addOrRemove(arr, req.params.masjidId);
   user.bookmarks = arr;
   await user.save();
 
@@ -195,7 +225,10 @@ exports.toggleBookmarks = catchAsync(async (req, res, next) => {
     message: 'OK',
     code: '200',
     data: {
-      doc: user,
+      doc: {
+        _id: req.params.masjidId,
+        is_bookmarked,
+      },
     },
   });
 });

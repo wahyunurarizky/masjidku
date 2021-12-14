@@ -52,7 +52,6 @@ const userSchema = mongoose.Schema({
     {
       type: mongoose.Schema.ObjectId,
       ref: 'Masjid',
-      select: false,
     },
   ],
 });

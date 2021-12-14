@@ -18,7 +18,7 @@ router.patch(
   masjidController.toggleBookmarks
 );
 
-router.get('/:id', masjidController.getOneMasjid);
+router.get('/:id', authController.checkLoggedIn, masjidController.getOneMasjid);
 
 router
   .route('/sekitar/:distance/center/:latlng')

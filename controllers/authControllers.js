@@ -121,7 +121,6 @@ exports.logout = (req, res) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) getting token and check is it's there
-  console.log(req.headers.authorization);
 
   let token;
   if (
@@ -165,6 +164,48 @@ exports.protect = catchAsync(async (req, res, next) => {
   // ini sangat penting karena req.user bisa digunakan kedepannya
   next();
 });
+
+exports.checkLoggedIn = async (req, res, next) => {
+  // 1) getting token and check is it's there
+  try {
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith('Bearer')
+    ) {
+      // Bearer asdsadaskjsoid aodijasidjaodiaohsidaoh so split sapasi dan get aray 1
+      token = req.headers.authorization.split(' ')[1];
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
+    }
+    // jika tidak ada token pada authorization header
+    if (!token) {
+      return next();
+    }
+
+    // 2) validate token is valid or not / verification token
+    // promisify untuk membuat function menjadi promise
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    // decoded = { id: '606834ffaafb1932b8a83c08', iat: 1617444009, exp: 1620036009 }
+
+    // 3) check if user still exist
+    const freshUser = await User.findById(decoded.id);
+    if (!freshUser) return next();
+
+    // 4) check if user changed password after the jwt was issued
+    if (freshUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    }
+
+    // bisa akses ke protected route
+    req.userLogin = freshUser;
+    res.locals.userLogin = freshUser;
+    // ini sangat penting karena req.user bisa digunakan kedepannya
+    next();
+  } catch (e) {
+    next();
+  }
+};
 
 // cek apakah req.user.role diizinkan untuk mengakses request
 exports.restrictTo = (...roles) => {
