@@ -17,3 +17,17 @@ exports.showMasjid = catchAsync(async (req, res, next) => {
     masjid,
   });
 });
+
+exports.showDashboard = catchAsync(async (req, res, next) => {
+  const nMasjid = await Masjid.count();
+  const nWedding = await Masjid.count({ available_wedding: true });
+  const nLibrary = await Masjid.count({ available_library: true });
+  const nWorkshop = await Masjid.count({ available_workshop: true });
+
+  res.status(200).render('admin/dashboard', {
+    nMasjid,
+    nWedding,
+    nLibrary,
+    nWorkshop,
+  });
+});

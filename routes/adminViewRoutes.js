@@ -8,9 +8,7 @@ const router = express.Router();
 router.use(authController.protect);
 router.use(authController.restrictTo('admin'));
 
-router.get('/', (req, res) => {
-  res.status(200).render('admin/dashboard');
-});
+router.get('/', viewController.showDashboard);
 router.get('/manage-masjids', viewController.manageMasjids);
 router.get('/manage-masjid/:id', viewController.showMasjid);
 
