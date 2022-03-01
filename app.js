@@ -16,7 +16,7 @@ const masjidRouter = require('./routes/masjidRoutes');
 const adminViewRouter = require('./routes/adminViewRoutes');
 const mainViewRouter = require('./routes/mainViewRoutes');
 
-// const doaJson = require('./doa.json');
+const doaJson = require('./doa.json');
 
 // *****************************declare app**************************
 const app = express();
@@ -87,9 +87,9 @@ app.use('/', mainViewRouter);
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/masjid', masjidRouter);
-// app.get('/api/v1/doa', (req, res, next) => {
-//   res.json(doaJson);
-// });
+app.get('/api/v1/doa', (req, res, next) => {
+  res.json(doaJson);
+});
 
 // handling un handled routes
 // all means get,post and etc
